@@ -29,10 +29,22 @@ flutter_ios_podfile_setup
 
 target 'Runner' do
   use_frameworks!
+  use_modular_headers!
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+
   target 'RunnerTests' do
+    use_frameworks!
+    use_modular_headers!
     inherit! :search_paths
+  end
+
+  target 'HwidgetExtension' do
+    use_frameworks!
+    use_modular_headers!
+    inherit! :search_paths
+
+    pod 'home_widget', :path => '.symlinks/plugins/home_widget/ios'
   end
 end
 

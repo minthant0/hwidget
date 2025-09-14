@@ -8,7 +8,7 @@
 import SwiftUI
 import WidgetKit
 
-private let widgetGroupId = "group.es.antonborri.exampleHomeWidget"
+private let widgetGroupId = "group.com.widgetpin.widgetPin"
 
 struct Provider: TimelineProvider {
   func placeholder(in context: Context) -> ExampleEntry {

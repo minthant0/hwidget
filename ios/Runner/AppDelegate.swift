@@ -1,6 +1,7 @@
 import Flutter
 import UIKit
 import home_widget
+import workmanager_apple
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -9,7 +10,7 @@ import home_widget
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
     // Register plugins
-    GeneratedPluginRegistrant.register(withRegistry: self)
+    GeneratedPluginRegistrant.register(with: self)
 
     // Enable background fetch for iOS (used by Workmanager)
     UIApplication.shared.setMinimumBackgroundFetchInterval(TimeInterval(60 * 15))
@@ -17,7 +18,7 @@ import home_widget
     // HomeWidget background worker (only iOS 17+)
     if #available(iOS 17, *) {
       HomeWidgetBackgroundWorker.setPluginRegistrantCallback { registry in
-        GeneratedPluginRegistrant.register(withRegistry: registry)
+        GeneratedPluginRegistrant.register(with: registry)
       }
     }
 
