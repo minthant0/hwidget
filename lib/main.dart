@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:math';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -52,7 +51,7 @@ Future<void> interactiveCallback(Uri? data) async {
       'xin chào',
     ];
     final selectedGreeting = greetings[Random().nextInt(greetings.length)];
-    await HomeWidget.setAppGroupId('YOUR_GROUP_ID');
+    await HomeWidget.setAppGroupId('group.com.widgetpin.widgetPin');
     await HomeWidget.saveWidgetData<String>('title', selectedGreeting);
     await HomeWidget.updateWidget(
       name: 'HomeWidgetExampleProvider',
@@ -91,7 +90,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    HomeWidget.setAppGroupId('YOUR_GROUP_ID');
+    HomeWidget.setAppGroupId('group.com.widgetpin.widgetPin');
     HomeWidget.registerInteractivityCallback(interactiveCallback);
     _checkPinability();
   }
@@ -117,7 +116,7 @@ class _MyAppState extends State<MyApp> {
         HomeWidget.saveWidgetData<String>('message', _messageController.text),
         HomeWidget.renderFlutterWidget(
           const Icon(
-            Icons.flutter_dash,
+            Icons.widgets,
             size: 200,
           ),
           logicalSize: const Size(200, 200),
@@ -246,7 +245,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('HomeWidget Example'),
+        backgroundColor: Colors.blue,
+        title: const Text('Home Widget',style: TextStyle(color: Colors.white),),
       ),
       body: Center(
         child: Padding(
@@ -265,40 +265,64 @@ class _MyAppState extends State<MyApp> {
                 ),
                 controller: _messageController,
               ),
-              ElevatedButton(
-                onPressed: _sendAndUpdate,
-                child: const Text('Send Data to Widget'),
-              ),
-              ElevatedButton(
-                onPressed: _loadData,
-                child: const Text('Load Data'),
-              ),
-              ElevatedButton(
-                onPressed: _checkForWidgetLaunch,
-                child: const Text('Check For Widget Launch'),
-              ),
-              if (Platform.isAndroid)
-                ElevatedButton(
-                  onPressed: _startBackgroundUpdate,
-                  child: const Text('Update in background'),
+              GestureDetector(
+                onTap: (){
+                  setState(() {
+                    _sendAndUpdate();
+                  });
+                },
+                child: Container(
+                  margin: EdgeInsets.only(top: 15),
+                  decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(10)
+                  ),
+                  width: MediaQuery.of(context).size.width,
+                  height: 48,
+                  alignment: Alignment.center,
+                  child: Text('Send Data to Widget',style: TextStyle(color: Colors.white,fontSize: 16),),
                 ),
-              if (Platform.isAndroid)
-                ElevatedButton(
-                  onPressed: _stopBackgroundUpdate,
-                  child: const Text('Stop updating in background'),
-                ),
-              ElevatedButton(
-                onPressed: _getInstalledWidgets,
-                child: const Text('Get Installed Widgets'),
               ),
               if (_isRequestPinWidgetSupported)
-                ElevatedButton(
-                  onPressed: () => HomeWidget.requestPinWidget(
-                    qualifiedAndroidName:
-                    'com.hwidget.hwidget.glance.HomeWidgetReceiver',
+                GestureDetector(
+                  onTap: (){
+                    setState(() {
+                      HomeWidget.requestPinWidget(
+                        qualifiedAndroidName:
+                        'com.hwidget.hwidget.glance.HomeWidgetReceiver',
+                      );
+                    });
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(top: 15),
+                    decoration: BoxDecoration(
+                        color: Colors.black12,
+                        borderRadius: BorderRadius.circular(10)
+                    ),
+                    width: MediaQuery.of(context).size.width,
+                    height: 48,
+                    alignment: Alignment.center,
+                    child: Text('Pin Widget',style: TextStyle(color: Colors.blue,fontSize: 16),),
                   ),
-                  child: const Text('Pin Widget'),
                 ),
+              GestureDetector(
+                onTap: (){
+                  setState(() {
+                    _sendAndUpdate();
+                  });
+                },
+                child: Container(
+                  margin: EdgeInsets.only(top: 15),
+                  decoration: BoxDecoration(
+                      color: Colors.blueGrey,
+                      borderRadius: BorderRadius.circular(10)
+                  ),
+                  width: MediaQuery.of(context).size.width,
+                  height: 48,
+                  alignment: Alignment.center,
+                  child: Text('Check Installed Widgets',style: TextStyle(color: Colors.white,fontSize: 16),),
+                ),
+              )
             ],
           ),
         ),
